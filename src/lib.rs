@@ -4,9 +4,15 @@ pub trait MapShape {
     
 }
 
+impl<T> MapShape for Option<T> {
+    fn map_shape(&mut self, rhs: Self) {
+        if let Some(rhs_value) = rhs { self.replace(rhs_value); }
+    }
+}
+
 #[inline]
 pub fn assign_map_value<T>(lhs: &mut Option<T>, rhs: Option<T>) {
-    if let Some(rhs_value) = rhs { lhs.replace(rhs_value); }
+    lhs.map_shape(rhs)
 }
 
 #[inline]
